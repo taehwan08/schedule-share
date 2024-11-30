@@ -1,0 +1,50 @@
+{% extends "schedules/base.html" %}
+
+{% block title %}일정 목록 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>일정 목록</h2>
+    <a href="{% url 'schedules:schedule_create' %}" class="btn btn-primary">
+        새 일정 만들기
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>시작 일시</th>
+                <th>종료 일시</th>
+                <th>작성자</th>
+                <th>참여자</th>
+                <th>작업</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedules %}
+            <tr>
+                <td>{{ schedule.title }}</td>
+                <td>{{ schedule.start_date|date:"Y-m-d H:i" }}</td>
+                <td>{{ schedule.end_date|date:"Y-m-d H:i" }}</td>
+                <td>{{ schedule.created_by.get_full_name }}</td>
+                <td>
+                    {% for participant in schedule.participants.all %}
+                        {{ participant.get_full_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'schedules:schedule_edit' schedule.pk %}" class="btn btn-sm btn-outline-primary">수정</a>
+                    <a href="{% url 'schedules:schedule_delete' schedule.pk %}" class="btn btn-sm btn-outline-danger">삭제</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">등록된 일정이 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 

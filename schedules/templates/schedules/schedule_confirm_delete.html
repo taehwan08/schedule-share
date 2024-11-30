@@ -1,0 +1,29 @@
+{% extends "schedules/base.html" %}
+
+{% block title %}일정 삭제 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">일정 삭제</h4>
+            </div>
+            <div class="card-body">
+                <p>다음 일정을 삭제하시겠습니까?</p>
+                <p><strong>{{ schedule.title }}</strong></p>
+                <p>시작: {{ schedule.start_date|date:"Y-m-d H:i" }}</p>
+                <p>종료: {{ schedule.end_date|date:"Y-m-d H:i" }}</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                        <a href="{% url 'schedules:schedule_list' %}" class="btn btn-secondary">취소</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
