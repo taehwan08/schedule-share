@@ -21,7 +21,7 @@
 
 1. 저장소 클론
 ```bash
-git clone https://github.com/[username]/schedule-share.git
+git clone https://github.com/taehwan08/schedule-share.git
 cd schedule-share
 ```
 
